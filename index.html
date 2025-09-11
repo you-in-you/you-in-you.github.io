@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black-snow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Global Styles & Variables --- */
+        :root {
+            --bg-dark: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --text-light: #f0f0f0;
+            --text-medium: #aaaaaa;
+            --neon-pink: #00aeff; /* Our Neon Accent */
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Playfair Display', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-secondary);
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        /* Neon underline effect for H2 */
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--neon-pink);
+            box-shadow: 0 0 8px var(--neon-pink);
+        }
+
+        p {
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--neon-pink);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--text-light);
+        }
+
+        section {
+            padding: 60px 0;
+            min-height: 80vh; /* Ensure sections take up space */
+        }
+
+        /* Apply alternating background */
+        #about, #Photo_Gallery, #contact { /* Sections with dark background */
+             background-color: var(--bg-dark);
+        }
+        #services { /* Section with secondary background */
+             background-color: var(--bg-secondary);
+        }
+
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--neon-pink);
+            color: var(--bg-dark);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-primary);
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(39, 20, 209, 0.911);
+        }
+
+        .btn:hover {
+            background-color: var(--text-light);
+            color: var(--neon-pink);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        /* --- Header & Navigation --- */
+        #main-header {
+            background-color: rgba(26, 26, 26, 0.85); /* Semi-transparent dark */
+            color: var(--text-light);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+        }
+
+        #main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #logo {
+            font-family: var(--font-secondary);
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+        #logo span { /* Neon accent on part of the logo */
+            color: var(--neon-pink);
+        }
+
+
+        #navbar ul {
+            list-style: none;
+            display: flex;
+        }
+
+        #navbar ul li {
+            margin-left: 25px;
+        }
+
+        #navbar ul li a {
+            color: var(--text-light);
+            font-weight: bold;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        #navbar ul li a:hover,
+        #navbar ul li a.active {
+            color: var(--neon-pink);
+            border-bottom-color: var(--neon-pink);
+        }
+
+        /* Mobile Nav Toggle - basic styling */
+        #menu-toggle {
+            display: none; /* Hidden by default */
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- Hero Section (#home) --- */
+        #home {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh; /* Full viewport height */
+            padding-top: 80px; /* Account for fixed header */
+            /* Basic Parallax Effect */
+            background: url('/images/snow.jpg') no-repeat center center/cover;
+            background-attachment: fixed; /* The key for simple parallax */
+            position: relative;
+            color: #fff; /* Force white text on image */
+        }
+
+        /* Dark overlay for better text readability */
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+            z-index: 1;
+        }
+
+        #home .container {
+            position: relative; /* To be above the overlay */
+            z-index: 2;
+        }
+
+
+        #home h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+         /* Neon effect on H1 */
+        #home h1 span {
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+        }
+
+        #home p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+        }
+
+        /* --- About Section --- */
+        #about .container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        #about .about-image {
+            flex: 1;
+            max-width: 40%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(18, 90, 199, 0.747);
+        }
+        #about .about-text {
+            flex: 1;
+        }
+
+        /* --- Services Section --- */
+        #services .services-grid {
+            display: grid;
+            grid-template-columns:1fr;
+            gap: 30px;
+            margin-top: 3rem;
+        }
+
+        .service-item {
+            background-color: var(--bg-dark); /* Use dark bg for contrast on secondary bg section */
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #031620; /* Slightly visible border */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-item:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px var(--neon-pink);
+        }
+        .service-item h3 {
+            color: var(--neon-pink);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        .service-item p {
+             font-size: 0.95rem;
+             color: var(--text-medium);
+        }
+
+        /* --- Photo_Gallery Section --- */
+        #Photo_Gallery .Photo_Gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .Photo_Gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .Photo_Gallery-item img {
+            transition: transform 0.4s ease;
+            display: block; /* Remove extra space below img */
+            width: 100%; /* Ensure images fill container */
+            height: 100%; /* Ensure images fill container */
+            object-fit: cover; /* Crop images nicely */
+            aspect-ratio: 1 / 1; /* Make items square */
+        }
+
+        .Photo_Gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .Photo_Gallery-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 102, 255, 0.6); /* Neon overlay */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .Photo_Gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* --- Lightbox --- */
+        #lightbox {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1100;
+            justify-content: center;
+            align-items: center;
+        }
+        #lightbox.active {
+            display: flex;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 85%;
+            object-fit: contain;
+            border: 3px solid var(--neon-pink);
+            box-shadow: 0 0 10px rgb(153, 61, 24);
+            border-radius: 6px;
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        #lightbox-close:hover {
+            color: var(--neon-pink);
+        }
+
+
+        /* --- Contact Section --- */
+        #contact-form {
+            max-width: 700px;
+            margin: 2rem auto 0 auto;
+            background-color: var(--bg-secondary); /* Match alternating bg pattern */
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-medium);
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-dark); /* Darker inputs */
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: var(--text-light);
+            font-family: var(--font-primary);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+             outline: none;
+             border-color: var(--neon-pink);
+             box-shadow: 0 0 8px var(--neon-pink);
+        }
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        #contact-form button[type="submit"] {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .contact-info {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--text-medium);
+        }
+        .contact-info p {
+             margin-bottom: 0.5rem;
+        }
+
+        /* --- Footer --- */
+        #main-footer {
+            background-color: #111;
+            color: var(--text-medium);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px; /* Give space before footer */
+            font-size: 0.9rem;
+        }
+        #main-footer a {
+            color: var(--neon-pink);
+        }
+
+        /* --- Live Chat Widget (Simulated) --- */
+        #chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--neon-pink);
+            color: var(--bg-dark);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem; /* Icon size */
+            cursor: pointer;
+            z-index: 1050;
+            box-shadow: 0 0 15px var(--neon-pink);
+            transition: transform 0.4s ease;
+        }
+        #chat-widget:hover {
+             transform: scale(1.1);
+        }
+
+        #chat-popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            bottom: 90px; /* Above widget */
+            right: 20px;
+            width: 330px;
+            max-height: 430px;
+            background-color: var(--bg-secondary);
+            border: 1px solid #ff0000;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            z-index: 1040;
+            overflow: hidden;
+            flex-direction: column;
+        }
+        #chat-popup.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background-color: var(--bg-dark);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ff0000;
+        }
+        .chat-header h4 {
+            margin: 0;
+            font-size: 1rem;
+            font-family: var(--font-primary);
+            color: #ff1010;
+        }
+        #chat-close {
+            background: none;
+            border: none;
+            color: var(--text-medium);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .chat-body {
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .chat-body p {
+             font-size: 0.9rem;
+             margin-bottom: 10px;
+             color: var(--text-light);
+        }
+        .chat-footer {
+             padding: 10px;
+             border-top: 1px solid #444;
+        }
+        .chat-footer input {
+             width: 100%;
+             padding: 8px;
+             border-radius: 5px;
+             border: 1px solid #555;
+             background-color: var(--bg-dark);
+             color: var(--text-light);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            #logo { font-size: 1.5rem; }
+
+            #navbar {
+                position: absolute;
+                top: 100%; /* Position below header */
+                left: 0;
+                width: 100%;
+                background-color: rgba(26, 26, 26, 0.95); /* Slightly more opaque */
+                max-height: 0; /* Collapsed by default */
+                overflow: hidden;
+                transition: max-height 0.5s ease-in-out;
+            }
+            #navbar.active {
+                 max-height: 300px; /* Height when open */
+            }
+
+            #navbar ul {
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+            }
+            #navbar ul li {
+                margin: 10px 0;
+                margin-left: 0;
+            }
+
+            #menu-toggle {
+                 display: block; /* Show hamburger */
+            }
+
+            #home h1 { font-size: 2.8rem; }
+            #home p { font-size: 1.1rem; }
+            h2 { font-size: 2rem; }
+
+            #about .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            #about .about-image {
+                 max-width: 70%;
+                 margin-bottom: 20px;
+            }
+
+            #Photo_Gallery .Photo_Gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller items on mobile */
+                 gap: 10px;
+            }
+
+            #chat-popup { width: calc(100% - 40px); /* More width on mobile */}
+        }
+
+        #home h1 span.blue {
+            color: #e6f7ff !important; /* آبی خیلی خیلی روشن */
+            text-shadow: 
+            0 0 10px #b3ecff,   /* هاله نزدیک‌تر */
+            0 0 20px #80e5ff,   /* هاله متوسط */
+            0 0 40px #4dd9ff,   /* هاله بزرگ‌تر */
+            0 0 80px #1ac6ff;   /* درخشش دورتر */
+        }
+
+        #logo span.blue {
+          color: #e6f7ff !important; /* آبی خیلی روشن */
+          text-shadow: 
+            0 0 5px #b3ecff,
+            0 0 19px #80e5ff,
+            0 0 30px #4dd9ff,
+            0 0 40px #1ac6ff;
+        }
+       
+    </style>
+
+</head>
+
+<body>
+    <!-- Modal -->
+<div id="music-permission" style="
+position: fixed;
+top:0; left:0;
+width:100%; height:100%;
+background-color: rgba(0,0,0,0.8);
+display:flex; justify-content:center; align-items:center;
+z-index: 2000;
+">
+<div style="background:#222; padding:30px; border-radius:10px; text-align:center; color:#fff; max-width:400px;">
+  <p>Do you want to enable background music while browsing?</p>
+  <button id="music-yes" style="margin:10px; padding:10px 20px; cursor:pointer;">Yes</button>
+  <button id="music-no" style="margin:10px; padding:10px 20px; cursor:pointer;">No</button>
+</div>
+</div>
+
+<!-- Background Audio -->
+<audio id="bg-music" loop>
+<source src="g.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+
+<script>
+    const modal = document.getElementById('music-permission');
+    const yesBtn = document.getElementById('music-yes');
+    const noBtn = document.getElementById('music-no');
+    const audio = document.getElementById('bg-music');
+
+    yesBtn.addEventListener('click', () => {
+        audio.play();           // شروع پخش صدا
+        modal.style.display = 'none'; // مخفی کردن باکس
+    });
+
+    noBtn.addEventListener('click', () => {
+        modal.style.display = 'none'; // فقط مخفی کردن باکس، بدون پخش صدا
+    });
+    </script>
+    
+    <header id="main-header">
+        <div class="container">
+            <div id="logo">Black <span class="blue">Snow</span></div>
+            <button id="menu-toggle">&#9776;</button> <nav id="navbar">
+                <ul>
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#about" class="nav-link">About-me</a></li>
+                    <li><a href="#services" class="nav-link">learning</a></li>
+                    <li><a href="#Photo_Gallery" class="nav-link">Photo-Gallery</a></li>
+                    <li><a href="#contact" class="nav-link">Contact-me</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="container">
+            <h1>Beautiful like <span class="blue">Snow</span></h1>
+            <p>Snow is the cold, soulless tears of the clouds</p>
+            <a href="#contact" class="btn">Contact me</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+             <div class="about-image">
+                <img src="/images/snow_night.jpg" alt="Makeup artist working">
+            </div>
+            <div class="about-text">
+                <h2>Who am I ?</h2>
+                <p>Welcome to my world , a place full of challenges and unconventional ideas, strange yet fascinating.
+                    I prefer to do things in unusual ways, even if others think it’s not the best path.
+                    Because The most insane inventions of humanity have come from the most insane ideas.</p>
+                <p>There’s a place where code and creativity collide. I’m there, experimenting, learning, and creating unusual and exciting things.For me, the goal isn’t just to build; I’m after real impact and practical results.</p>
+                 <a href="#Photo_Gallery" class="btn">Photo-Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2>Learning</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>Network</h3>
+                    <p>Networks have always felt like a puzzle to me. These days, I’m learning step by step how these puzzles are solved, from IPs and routers to security and data structures.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Python</h3>
+                    <p>By learning a programming language like Python, you step into a whole new world. You get to create and own both small and big tools, shaping them with your own hands as their true creator.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Linux</h3>
+                    <p>By learning Linux, you step into a powerful world where real control over systems is in your hands. From simple commands to complex management and building your own tools, every step gives you a new experience and creative freedom.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Astronomy</h3>
+                    <p>When we look at the clear, dark night sky, the only thing that feels truly constant are the stars. we see them as tiny and large dots, sometimes the biggest things appear small, reminding us that our perceptions are only a small part of the true reality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="Photo_Gallery">
+        <div class="container">
+            <h2>Photo Gallery</h2>
+            <div class="Photo_Gallery-grid">
+                <div class="Photo_Gallery-item" data-src="images/cat.jpg">
+                    <img src="images/cat.jpg" alt="High Fashion Makeup Look 1">
+                    <div class="overlay">View</div>
+                </div>
+                <div class="Photo_Gallery-item" data-src="images/a.jpg">
+                    <img src="images/a.jpg" alt="Editorial Makeup Look 2">
+                    <div class="overlay">View</div>
+                </div>
+                 <div class="Photo_Gallery-item" data-src="images/k.jpg">
+                    <img src="images/k.jpg" alt="Neon Makeup Look 3">
+                    <div class="overlay">View</div>
+                </div>
+                <div class="Photo_Gallery-item" data-src="images/c.jpg">
+                    <img src="images/c.jpg" alt="Fashion Makeup Look 4">
+                    <div class="overlay">View</div>
+                </div>
+                 <div class="Photo_Gallery-item" data-src="images/87.jpg">
+                    <img src="images/87.jpg" alt="Avant Garde Makeup Look 5">
+                    <div class="overlay">View</div>
+                </div>
+                <div class="Photo_Gallery-item" data-src="images/th.jfif">
+                    <img src="images/th.jfif" alt="Bridal Makeup Look 6">
+                    <div class="overlay">View</div>
+                </div>
+                 <div class="Photo_Gallery-item" data-src="images/ddr.jpg">
+                    <img src="images/ddr.jpg" alt="Creative Makeup Look 7">
+                    <div class="overlay">View</div>
+                </div>
+                <div class="Photo_Gallery-item" data-src="images/qq.jpg">
+                    <img src="images/qq.jpg" alt="Glamour Makeup Look 8">
+                    <div class="overlay">View</div>
+                </div>
+                </div>
+        </div>
+    </section>
+
+     <div id="lightbox">
+        <span id="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Photo_Gallery Image Large View">
+    </div>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p style="text-align: center;">Write to me anything you want, I will answer.</p>
+            <form id="contact-form" action="https://formspree.io/f/mpwjyzpo" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="Telegram username">Telegram username</label>
+                    <input type="Telegram username" id="Telegram username" name="Telegram username" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+            
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('contact-form');
+            
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault(); // جلوگیری از رفرش شدن صفحه
+            
+                    const formData = new FormData(form);
+                    const action = form.getAttribute('action');
+            
+                    try {
+                        const response = await fetch(action, {
+                            method: 'POST',
+                            body: formData
+                        });
+            
+                        if(response.ok) {
+                            alert('Thank you! Your message has been sent.');
+                            form.reset(); // پاک کردن فرم
+                        } else {
+                            alert('Oops! Something went wrong.');
+                        }
+                    } catch (error) {
+                        alert('Network error. Try again later.');
+                        console.error(error);
+                    }
+                });
+            });
+            </script>            
+            <div class="contact-info">
+                <p>
+                    <strong>Contact:</strong> 
+                    <span>
+                      <a href="mailto:Reza.You.in.You@gmail.com">Email</a> | 
+                      <a href="https://www.instagram.com/reza.you_in_you/" target="_blank">Instagram</a> |
+                      <a href="https://t.me/you_in_you" target="_blank">Telegram</a> |
+                      <a href="https://t.me/Edi_s_bot" target="_blank">Telegram Bot</a> |
+                      <a href="https://www.reddit.com/user/Impressive_Daikon232/" target="_blank">Reddit</a> |
+                      <a href="https://github.com/you-in-you" target="_blank">Github</a> |
+                    </span>
+                </p>
+            </div>            
+        </div>
+    </section>
+
+    <footer id="main-footer">
+        <p>&copy; 2025 Black-snow. All Rights Reserved. | Redesigned by you_in_you</p>
+         <p>"The best revenge is to improve yourself." — Ali ibn Abi Talib</p>
+    </footer>
+
+    <div id="chat-widget">💬</div>
+    <div id="chat-popup">
+        <div class="chat-header">
+            <h4>Rate This Design</h4>
+            <button type="button" id="chat-close">&times;</button>
+        </div>
+        <div class="chat-body">
+            <p>What you saw was my site!</p>
+            <p>If you have any suggestions for its design, write them below.</p>
+        </div>
+        <div class="chat-footer">
+            <form action="https://getform.io/f/bdrddxgb" method="POST">
+                <input type="text" name="message" placeholder="Type your message..." required>
+                <button type="submit" class="btn">Send</button>
+            </form>
+        </div>
+    </div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Mobile Navigation Toggle ---
+            const menuToggle = document.getElementById('menu-toggle');
+            const navbar = document.getElementById('navbar');
+
+            if (menuToggle && navbar) {
+                 menuToggle.addEventListener('click', () => {
+                    navbar.classList.toggle('active');
+                 });
+                 // Close menu when a link is clicked (optional)
+                 navbar.querySelectorAll('a').forEach(link => {
+                     link.addEventListener('click', () => {
+                         if (navbar.classList.contains('active')) {
+                            navbar.classList.remove('active');
+                         }
+                     });
+                 });
+            }
+
+            // --- Active Nav Link Highlighting on Scroll ---
+            const sections = document.querySelectorAll('section'); // Select all sections
+            const navLinks = document.querySelectorAll('#navbar a.nav-link');
+
+            const options = {
+                root: null, // viewport
+                threshold: 0.5, // 50% of section visible
+                rootMargin: "-80px 0px 0px 0px" // Adjust for fixed header height
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            // Check if the link's href matches the intersecting section's id
+                            if (link.getAttribute('href') === `#${entry.target.id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, options);
+
+            // Observe all section elements found
+            sections.forEach(section => {
+                if(section.id) { // Only observe sections that have an ID (relevant for nav)
+                     observer.observe(section);
+                }
+            });
+
+
+            // --- Photo_Gallery Lightbox ---
+            const Photo_GalleryItems = document.querySelectorAll('.Photo_Gallery-item');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+
+            if (lightbox && lightboxImg && lightboxClose) {
+                Photo_GalleryItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const imgSrc = item.getAttribute('data-src');
+                        if (imgSrc) {
+                            lightboxImg.setAttribute('src', imgSrc);
+                            lightbox.classList.add('active');
+                        }
+                    });
+                });
+
+                // Close lightbox
+                lightboxClose.addEventListener('click', () => {
+                    lightbox.classList.remove('active');
+                    lightboxImg.setAttribute('src', ''); // Clear src
+                });
+
+                // Close on clicking background (optional)
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightbox) { // Check if the click is on the background itself
+                         lightbox.classList.remove('active');
+                         lightboxImg.setAttribute('src', '');
+                    }
+                });
+            }
+
+
+            // --- Simulated Chat Widget Toggle ---
+            const chatWidget = document.getElementById('chat-widget');
+            const chatPopup = document.getElementById('chat-popup');
+            const chatClose = document.getElementById('chat-close');
+
+            if (chatWidget && chatPopup && chatClose) {
+                chatWidget.addEventListener('click', () => {
+                    chatPopup.classList.toggle('active');
+                });
+
+                chatClose.addEventListener('click', () => {
+                    chatPopup.classList.remove('active');
+                });
+            }
+
+             // --- Disable Form Submission (Demo Only) ---
+            const contactForm = document.getElementById('contact-form');
+            if(contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); // Prevent actual submission
+                    alert('Thank you for your message!');
+                    contactForm.reset(); // Clear the form
+                });
+            }
+
+        });
+    </script>
+
+</body>
+</html>
