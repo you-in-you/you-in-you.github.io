@@ -3,959 +3,419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Black-snow</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* --- Global Styles & Variables --- */
-        :root {
-            --bg-dark: #1a1a1a;
-            --bg-secondary: #2a2a2a;
-            --text-light: #f0f0f0;
-            --text-medium: #aaaaaa;
-            --neon-pink: #00aeff; /* Our Neon Accent */
-            --font-primary: 'Montserrat', sans-serif;
-            --font-secondary: 'Playfair Display', serif;
-        }
+    <title>Edis - Secure E2EE Protocol for Critical Infrastructure</title>
+    <link rel="stylesheet" href="templatemo-chain-summit.css">
+<!-- 
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+TemplateMo 601 Chain Summit
 
-        html {
-            scroll-behavior: smooth;
-        }
+https://templatemo.com/tm-601-chain-summit
 
-        body {
-            font-family: var(--font-primary);
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        h1, h2, h3 {
-            font-family: var(--font-secondary);
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        /* Neon underline effect for H2 */
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--neon-pink);
-            box-shadow: 0 0 8px var(--neon-pink);
-        }
-
-        p {
-            color: var(--text-medium);
-            margin-bottom: 1rem;
-        }
-
-        a {
-            color: var(--neon-pink);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: var(--text-light);
-        }
-
-        section {
-            padding: 60px 0;
-            min-height: 80vh; /* Ensure sections take up space */
-        }
-
-        /* Apply alternating background */
-        #about, #Photo_Gallery, #contact { /* Sections with dark background */
-             background-color: var(--bg-dark);
-        }
-        #services { /* Section with secondary background */
-             background-color: var(--bg-secondary);
-        }
-
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--neon-pink);
-            color: var(--bg-dark);
-            padding: 12px 25px;
-            border: none;
-            border-radius: 5px;
-            font-family: var(--font-primary);
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 10px rgba(39, 20, 209, 0.911);
-        }
-
-        .btn:hover {
-            background-color: var(--text-light);
-            color: var(--neon-pink);
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px var(--neon-pink);
-        }
-
-        /* --- Header & Navigation --- */
-        #main-header {
-            background-color: rgba(26, 26, 26, 0.85); /* Semi-transparent dark */
-            color: var(--text-light);
-            padding: 15px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            transition: background-color 0.3s ease;
-            backdrop-filter: blur(5px); /* Frosted glass effect */
-        }
-
-        #main-header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #logo {
-            font-family: var(--font-secondary);
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--text-light);
-        }
-        #logo span { /* Neon accent on part of the logo */
-            color: var(--neon-pink);
-        }
-
-
-        #navbar ul {
-            list-style: none;
-            display: flex;
-        }
-
-        #navbar ul li {
-            margin-left: 25px;
-        }
-
-        #navbar ul li a {
-            color: var(--text-light);
-            font-weight: bold;
-            padding-bottom: 5px;
-            border-bottom: 2px solid transparent;
-            transition: color 0.3s ease, border-color 0.3s ease;
-        }
-
-        #navbar ul li a:hover,
-        #navbar ul li a.active {
-            color: var(--neon-pink);
-            border-bottom-color: var(--neon-pink);
-        }
-
-        /* Mobile Nav Toggle - basic styling */
-        #menu-toggle {
-            display: none; /* Hidden by default */
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* --- Hero Section (#home) --- */
-        #home {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            min-height: 100vh; /* Full viewport height */
-            padding-top: 80px; /* Account for fixed header */
-            /* Basic Parallax Effect */
-            background: url('images/snow.jpg') no-repeat center center/cover;
-            background-attachment: fixed; /* The key for simple parallax */
-            position: relative;
-            color: #fff; /* Force white text on image */
-        }
-
-        /* Dark overlay for better text readability */
-        #home::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
-            z-index: 1;
-        }
-
-        #home .container {
-            position: relative; /* To be above the overlay */
-            z-index: 2;
-        }
-
-
-        #home h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: #fff;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-        }
-         /* Neon effect on H1 */
-        #home h1 span {
-            color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
-        }
-
-        #home p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: var(--text-light);
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
-        }
-
-        /* --- About Section --- */
-        #about .container {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-        #about .about-image {
-            flex: 1;
-            max-width: 40%;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(18, 90, 199, 0.747);
-        }
-        #about .about-text {
-            flex: 1;
-        }
-
-        /* --- Services Section --- */
-        #services .services-grid {
-            display: grid;
-            grid-template-columns:1fr;
-            gap: 30px;
-            margin-top: 3rem;
-        }
-
-        .service-item {
-            background-color: var(--bg-dark); /* Use dark bg for contrast on secondary bg section */
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #031620; /* Slightly visible border */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .service-item:hover {
-             transform: translateY(-5px);
-             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px var(--neon-pink);
-        }
-        .service-item h3 {
-            color: var(--neon-pink);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-        .service-item p {
-             font-size: 0.95rem;
-             color: var(--text-medium);
-        }
-
-        /* --- Photo_Gallery Section --- */
-        #Photo_Gallery .Photo_Gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .Photo_Gallery-item {
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .Photo_Gallery-item img {
-            transition: transform 0.4s ease;
-            display: block; /* Remove extra space below img */
-            width: 100%; /* Ensure images fill container */
-            height: 100%; /* Ensure images fill container */
-            object-fit: cover; /* Crop images nicely */
-            aspect-ratio: 1 / 1; /* Make items square */
-        }
-
-        .Photo_Gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .Photo_Gallery-item .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 102, 255, 0.6); /* Neon overlay */
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .Photo_Gallery-item:hover .overlay {
-            opacity: 1;
-        }
-
-        /* --- Lightbox --- */
-        #lightbox {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1100;
-            justify-content: center;
-            align-items: center;
-        }
-        #lightbox.active {
-            display: flex;
-        }
-        #lightbox img {
-            max-width: 90%;
-            max-height: 85%;
-            object-fit: contain;
-            border: 3px solid var(--neon-pink);
-            box-shadow: 0 0 10px rgb(153, 61, 24);
-            border-radius: 6px;
-        }
-        #lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 2.5rem;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        #lightbox-close:hover {
-            color: var(--neon-pink);
-        }
-
-
-        /* --- Contact Section --- */
-        #contact-form {
-            max-width: 700px;
-            margin: 2rem auto 0 auto;
-            background-color: var(--bg-secondary); /* Match alternating bg pattern */
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #444;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: var(--text-medium);
-        }
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--bg-dark); /* Darker inputs */
-            border: 1px solid #444;
-            border-radius: 5px;
-            color: var(--text-light);
-            font-family: var(--font-primary);
-        }
-        .form-group input:focus,
-        .form-group textarea:focus {
-             outline: none;
-             border-color: var(--neon-pink);
-             box-shadow: 0 0 8px var(--neon-pink);
-        }
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        #contact-form button[type="submit"] {
-            width: 100%;
-            margin-top: 1rem;
-        }
-        .contact-info {
-            text-align: center;
-            margin-top: 3rem;
-            color: var(--text-medium);
-        }
-        .contact-info p {
-             margin-bottom: 0.5rem;
-        }
-
-        /* --- Footer --- */
-        #main-footer {
-            background-color: #111;
-            color: var(--text-medium);
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px; /* Give space before footer */
-            font-size: 0.9rem;
-        }
-        #main-footer a {
-            color: var(--neon-pink);
-        }
-
-        /* --- Live Chat Widget (Simulated) --- */
-        #chat-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--neon-pink);
-            color: var(--bg-dark);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.8rem; /* Icon size */
-            cursor: pointer;
-            z-index: 1050;
-            box-shadow: 0 0 15px var(--neon-pink);
-            transition: transform 0.4s ease;
-        }
-        #chat-widget:hover {
-             transform: scale(1.1);
-        }
-
-        #chat-popup {
-            display: none; /* Hidden by default */
-            position: fixed;
-            bottom: 90px; /* Above widget */
-            right: 20px;
-            width: 330px;
-            max-height: 430px;
-            background-color: var(--bg-secondary);
-            border: 1px solid #ff0000;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            z-index: 1040;
-            overflow: hidden;
-            flex-direction: column;
-        }
-        #chat-popup.active {
-            display: flex;
-        }
-
-        .chat-header {
-            background-color: var(--bg-dark);
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ff0000;
-        }
-        .chat-header h4 {
-            margin: 0;
-            font-size: 1rem;
-            font-family: var(--font-primary);
-            color: #ff1010;
-        }
-        #chat-close {
-            background: none;
-            border: none;
-            color: var(--text-medium);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        .chat-body {
-            padding: 15px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-        .chat-body p {
-             font-size: 0.9rem;
-             margin-bottom: 10px;
-             color: var(--text-light);
-        }
-        .chat-footer {
-             padding: 10px;
-             border-top: 1px solid #444;
-        }
-        .chat-footer input {
-             width: 100%;
-             padding: 8px;
-             border-radius: 5px;
-             border: 1px solid #555;
-             background-color: var(--bg-dark);
-             color: var(--text-light);
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            #logo { font-size: 1.5rem; }
-
-            #navbar {
-                position: absolute;
-                top: 100%; /* Position below header */
-                left: 0;
-                width: 100%;
-                background-color: rgba(26, 26, 26, 0.95); /* Slightly more opaque */
-                max-height: 0; /* Collapsed by default */
-                overflow: hidden;
-                transition: max-height 0.5s ease-in-out;
-            }
-            #navbar.active {
-                 max-height: 300px; /* Height when open */
-            }
-
-            #navbar ul {
-                flex-direction: column;
-                align-items: center;
-                padding: 20px 0;
-            }
-            #navbar ul li {
-                margin: 10px 0;
-                margin-left: 0;
-            }
-
-            #menu-toggle {
-                 display: block; /* Show hamburger */
-            }
-
-            #home h1 { font-size: 2.8rem; }
-            #home p { font-size: 1.1rem; }
-            h2 { font-size: 2rem; }
-
-            #about .container {
-                flex-direction: column;
-                text-align: center;
-            }
-            #about .about-image {
-                 max-width: 70%;
-                 margin-bottom: 20px;
-            }
-
-            #Photo_Gallery .Photo_Gallery-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller items on mobile */
-                 gap: 10px;
-            }
-
-            #chat-popup { width: calc(100% - 40px); /* More width on mobile */}
-        }
-
-        #home h1 span.blue {
-            color: #e6f7ff !important; /* آبی خیلی خیلی روشن */
-            text-shadow: 
-            0 0 10px #b3ecff,   /* هاله نزدیک‌تر */
-            0 0 20px #80e5ff,   /* هاله متوسط */
-            0 0 40px #4dd9ff,   /* هاله بزرگ‌تر */
-            0 0 80px #1ac6ff;   /* درخشش دورتر */
-        }
-
-        #logo span.blue {
-          color: #e6f7ff !important; /* آبی خیلی روشن */
-          text-shadow: 
-            0 0 5px #b3ecff,
-            0 0 19px #80e5ff,
-            0 0 30px #4dd9ff,
-            0 0 40px #1ac6ff;
-        }
-       
-    </style>
-
+-->
 </head>
-
 <body>
-    <!-- Modal -->
-<div id="music-permission" style="
-position: fixed;
-top:0; left:0;
-width:100%; height:100%;
-background-color: rgba(0,0,0,0.8);
-display:flex; justify-content:center; align-items:center;
-z-index: 2000;
-">
-<div style="background:#222; padding:30px; border-radius:10px; text-align:center; color:#fff; max-width:400px;">
-  <p>Do you want to enable background music while browsing?</p>
-  <button id="music-yes" style="margin:10px; padding:10px 20px; cursor:pointer;">Yes</button>
-  <button id="music-no" style="margin:10px; padding:10px 20px; cursor:pointer;">No</button>
-</div>
-</div>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="neural-network" id="neuralNetwork"></div>
+        <div class="particles" id="particles"></div>
+    </div>
 
-<!-- Background Audio -->
-<audio id="bg-music" loop>
-<source src="g.mp3" type="audio/mpeg">
-Your browser does not support the audio element.
-</audio>
-
-<script>
-    const modal = document.getElementById('music-permission');
-    const yesBtn = document.getElementById('music-yes');
-    const noBtn = document.getElementById('music-no');
-    const audio = document.getElementById('bg-music');
-
-    yesBtn.addEventListener('click', () => {
-        audio.play();           // شروع پخش صدا
-        modal.style.display = 'none'; // مخفی کردن باکس
-    });
-
-    noBtn.addEventListener('click', () => {
-        modal.style.display = 'none'; // فقط مخفی کردن باکس، بدون پخش صدا
-    });
-    </script>
-    
-    <header id="main-header">
-        <div class="container">
-            <div id="logo">Black <span class="blue">Snow</span></div>
-            <button id="menu-toggle">&#9776;</button> <nav id="navbar">
-                <ul>
-                    <li><a href="#home" class="nav-link active">Home</a></li>
-                    <li><a href="#about" class="nav-link">About-me</a></li>
-                    <li><a href="#services" class="nav-link">learning</a></li>
-                    <li><a href="#Photo_Gallery" class="nav-link">Photo-Gallery</a></li>
-                    <li><a href="#contact" class="nav-link">Contact-me</a></li>
-                </ul>
-            </nav>
-        </div>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#home" class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Hexagon background -->
+                    <polygon points="50,5 85,25 85,65 50,85 15,65 15,25" 
+                             fill="none" 
+                             stroke="url(#gradientStroke)" 
+                             stroke-width="2"/>
+                    
+                    <!-- Neural network nodes -->
+                    <circle cx="50" cy="30" r="4" fill="#00ffff"/>
+                    <circle cx="35" cy="45" r="4" fill="#ff00ff"/>
+                    <circle cx="65" cy="45" r="4" fill="#ff00ff"/>
+                    <circle cx="35" cy="65" r="4" fill="#00ffff"/>
+                    <circle cx="65" cy="65" r="4" fill="#00ffff"/>
+                    <circle cx="50" cy="55" r="5" fill="#7c3aed"/>
+                    
+                    <!-- Connection lines -->
+                    <line x1="50" y1="30" x2="35" y2="45" stroke="#00ffff" stroke-width="1" opacity="0.5"/>
+                    <line x1="50" y1="30" x2="65" y2="45" stroke="#00ffff" stroke-width="1" opacity="0.5"/>
+                    <line x1="35" y1="45" x2="50" y2="55" stroke="#ff00ff" stroke-width="1" opacity="0.5"/>
+                    <line x1="65" y1="45" x2="50" y2="55" stroke="#ff00ff" stroke-width="1" opacity="0.5"/>
+                    <line x1="50" y1="55" x2="35" y2="65" stroke="#7c3aed" stroke-width="1" opacity="0.5"/>
+                    <line x1="50" y1="55" x2="65" y2="65" stroke="#7c3aed" stroke-width="1" opacity="0.5"/>
+                    
+                    <!-- Gradient definitions -->
+                    <defs>
+                        <linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#ff00ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="logo-text">EDI-S</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">Overview</a></li>
+                <li><a href="#features">Security Pillars</a></li> <li><a href="#schedule">Operation Flow</a></li>
+                <li><a href="#standards">Standards</a></li> <li><a href="#register">Whitepaper</a></li> </ul>
+            
+            <div class="mobile-nav" id="mobileNav">
+                <a href="#about" onclick="closeMenu()">Overview</a>
+                <a href="#features" onclick="closeMenu()">Security Pillars</a>
+                <a href="#schedule" onclick="closeMenu()">Operation Flow</a>
+                <a href="#standards" onclick="closeMenu()">Standards</a>
+                <a href="#register" onclick="closeMenu()">Whitepaper</a>
+            </div>
     </header>
 
-    <section id="home">
-        <div class="container">
-            <h1>Beautiful like <span class="blue">Snow</span></h1>
-            <p>Snow is the cold, soulless tears of the clouds</p>
-            <a href="#contact" class="btn">Contact me</a>
-        </div>
-    </section>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Edis Protocol</h1>
+            <p>Advanced E2EE Architecture & Hardware-Backed Security for Critical Infrastructure</p>
+            
+            <!-- <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number" data-target="500">0</span>
+                    <span class="stat-label">Attendees</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-target="50">0</span>
+                    <span class="stat-label">Speakers</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-target="3">0</span>
+                    <span class="stat-label">Days</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" data-target="25">0</span>
+                    <span class="stat-label">Sponsors</span>
+                </div>
+            </div> -->
 
-    <section id="about">
-        <div class="container">
-             <div class="about-image">
-                <img src="images/snow_night.jpg" alt="Makeup artist working">
-            </div>
-            <div class="about-text">
-                <h2>Who am I ?</h2>
-                <p>Welcome to my world , a place full of challenges and unconventional ideas, strange yet fascinating.
-                    I prefer to do things in unusual ways, even if others think it’s not the best path.
-                    Because The most insane inventions of humanity have come from the most insane ideas.</p>
-                <p>There’s a place where code and creativity collide. I’m there, experimenting, learning, and creating unusual and exciting things.For me, the goal isn’t just to build; I’m after real impact and practical results.</p>
-                 <a href="#Photo_Gallery" class="btn">Photo-Gallery</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="services">
-        <div class="container">
-            <h2>Learning</h2>
-            <div class="services-grid">
-                <div class="service-item">
-                    <h3>Network</h3>
-                    <p>Networks have always felt like a puzzle to me. These days, I’m learning step by step how these puzzles are solved, from IPs and routers to security and data structures.</p>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Days</span>
                 </div>
-                <div class="service-item">
-                    <h3>Python</h3>
-                    <p>By learning a programming language like Python, you step into a whole new world. You get to create and own both small and big tools, shaping them with your own hands as their true creator.</p>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
                 </div>
-                <div class="service-item">
-                    <h3>Linux</h3>
-                    <p>By learning Linux, you step into a powerful world where real control over systems is in your hands. From simple commands to complex management and building your own tools, every step gives you a new experience and creative freedom.</p>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
                 </div>
-                <div class="service-item">
-                    <h3>Astronomy</h3>
-                    <p>When we look at the clear, dark night sky, the only thing that feels truly constant are the stars. we see them as tiny and large dots, sometimes the biggest things appear small, reminding us that our perceptions are only a small part of the true reality.</p>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
                 </div>
             </div>
+
+            <div class="cta-buttons">
+                <a href="#about" class="btn btn-primary">Learn More</a>
+                <a href="#schedule" class="btn btn-secondary">View Schedule</a>
+            </div>
         </div>
     </section>
 
-    <section id="Photo_Gallery">
-        <div class="container">
-            <h2>Photo Gallery</h2>
-            <div class="Photo_Gallery-grid">
-                <div class="Photo_Gallery-item" data-src="images/cat.jpg">
-                    <img src="images/cat.jpg" alt="High Fashion Makeup Look 1">
-                    <div class="overlay">View</div>
-                </div>
-                <div class="Photo_Gallery-item" data-src="images/a.jpg">
-                    <img src="images/a.jpg" alt="Editorial Makeup Look 2">
-                    <div class="overlay">View</div>
-                </div>
-                 <div class="Photo_Gallery-item" data-src="images/k.jpg">
-                    <img src="images/k.jpg" alt="Neon Makeup Look 3">
-                    <div class="overlay">View</div>
-                </div>
-                <div class="Photo_Gallery-item" data-src="images/c.jpg">
-                    <img src="images/c.jpg" alt="Fashion Makeup Look 4">
-                    <div class="overlay">View</div>
-                </div>
-                 <div class="Photo_Gallery-item" data-src="images/87.jpg">
-                    <img src="images/87.jpg" alt="Avant Garde Makeup Look 5">
-                    <div class="overlay">View</div>
-                </div>
-                <div class="Photo_Gallery-item" data-src="images/th.jfif">
-                    <img src="images/th.jfif" alt="Bridal Makeup Look 6">
-                    <div class="overlay">View</div>
-                </div>
-                 <div class="Photo_Gallery-item" data-src="images/ddr.jpg">
-                    <img src="images/ddr.jpg" alt="Creative Makeup Look 7">
-                    <div class="overlay">View</div>
-                </div>
-                <div class="Photo_Gallery-item" data-src="images/qq.jpg">
-                    <img src="images/qq.jpg" alt="Glamour Makeup Look 8">
-                    <div class="overlay">View</div>
-                </div>
-                </div>
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="animate-on-scroll">About Edis Project</h2>
+        <div class="about-content">
+        <div class="about-text animate-on-scroll slide-left">
+            <p>
+                <a href="#architecture" class="feature-link"><strong>Edis</strong></a> is an advanced communication protocol engineered for maximum security within high-stakes <a href="https://www.cloudflare.com/learning/network-layer/what-is-a-lan/" target="_blank" class="accent-link">local area networks (LAN)</a>. The project focuses on mitigating internal threats and preventing data breaches in critical infrastructures such as power plants and medical facilities.
+            </p>
+            
+            <p>
+                By leveraging a <a href="https://www.nist.gov/publications/zero-trust-architecture" target="_blank" class="accent-link"><strong>Zero-Trust</strong></a> security model and <a href="https://learn.microsoft.com/en-us/windows/security/hardware-security/tpm/trusted-platform-module-overview" target="_blank" class="accent-link">hardware-backed isolation</a> (TPM integration), Edis ensures that cryptographic keys remain protected even if a client terminal is physically compromised. Security isn't just a feature in Edis; it is the core of the system's architecture.
+            </p>
+            
+            <p>
+                Our mission is to bridge the gap between rigorous, military-grade security and a <a href="#ux-design" class="feature-link">seamless user experience (UX)</a>, allowing personnel to exchange sensitive data without navigating the complexities of manual encryption management.
+            </p>
         </div>
+        <div class="about-visual animate-on-scroll slide-right">
+            <div class="blockchain-visual">
+                <div class="block">E2EE</div> <div class="block">TPM</div>  <div class="block">AES</div>  <div class="block">RSA</div>  <div class="block">PFS</div>  <div class="block">LAN</div>  <div class="block">DH</div>   <div class="block">HMAC</div> <div class="block">ECC</div>  </div>
+        </div>
+        
+<div class="about-stats animate-on-scroll scale-up">
+    <div class="about-stat">
+        <span class="about-stat-number">256-bit</span>
+        <span class="about-stat-label">AES Encryption</span>
+    </div>
+    <div class="about-stat">
+        <span class="about-stat-number">Zero</span>
+        <span class="about-stat-label">Server-Side Plaintext</span>
+    </div>
+    <div class="about-stat">
+        <span class="about-stat-number">100%</span>
+        <span class="about-stat-label">Hardware Key Isolation</span>
+    </div>
+    <div class="about-stat">
+        <span class="about-stat-number">&lt; 10ms</span>
+        <span class="about-stat-label">Encryption Latency</span>
+    </div>
+</div>
+
+        <!-- Hexagonal decorations -->
+        <div class="hex-decoration" style="top: 10%; left: 5%;"></div>
+        <div class="hex-decoration" style="top: 70%; right: 10%; animation-delay: 2s;"></div>
+        <div class="hex-decoration" style="top: 40%; right: 5%; animation-delay: 4s;"></div>
     </section>
 
-     <div id="lightbox">
-        <span id="lightbox-close">&times;</span>
-        <img id="lightbox-img" src="" alt="Photo_Gallery Image Large View">
+<section id="features" class="section">
+    <h2 class="animate-on-scroll">Security Architecture Pillars</h2>
+    <div class="speakers-grid">
+        <div class="speaker-card animate-on-scroll scale-up stagger-animation" style="--stagger: 1;">
+            <div class="speaker-avatar">TPM</div>
+            <h3 class="speaker-name">Hardware Isolation</h3>
+            <div class="speaker-title">TPM 2.0 Integration</div>
+            <p class="speaker-bio">Keys are never exposed to the OS. All cryptographic operations take place within the Trusted Platform Module.</p>
+        </div>
+
+        <div class="speaker-card animate-on-scroll scale-up stagger-animation" style="--stagger: 2;">
+            <div class="speaker-avatar">E2E</div>
+            <h3 class="speaker-name">Zero-Knowledge</h3>
+            <div class="speaker-title">Asymmetric Hybrid Encryption</div>
+            <p class="speaker-bio">The server acts as a blind relay. Message content is encrypted locally and only readable by the designated recipient.</p>
+        </div>
+
+        <div class="speaker-card animate-on-scroll scale-up stagger-animation" style="--stagger: 3;">
+            <div class="speaker-avatar">PFS</div>
+            <h3 class="speaker-name">Forward Secrecy</h3>
+            <h3 class="speaker-title">Ephemeral Key Exchange</h3>
+            <p class="speaker-bio">Session keys are refreshed continuously. Even if a future key is compromised, past communications remain secure.</p>
+        </div>
+
+        <div class="speaker-card animate-on-scroll scale-up stagger-animation" style="--stagger: 4;">
+            <div class="speaker-avatar">ID</div>
+            <h3 class="speaker-name">Identity Shield</h3>
+            <div class="speaker-title">Digital Signature Verification</div>
+            <p class="speaker-bio">Prevents Man-in-the-Middle (MitM) attacks by verifying every node's identity through hardware-bound certificates.</p>
+        </div>
+        <div class="speaker-card animate-on-scroll scale-up stagger-animation" style="--stagger: 5;">
+            <div class="speaker-avatar">MESH</div>
+            <h3 class="speaker-name">Node Resilience</h3>
+            <div class="speaker-title">Decentralized Trust Model</div>
+            <p class="speaker-bio">Eliminates single points of failure. The network maintains integrity even if central nodes are offline or compromised.</p>
+        </div>
+
+        <div class="speaker-card animate-on-scroll scale-up stagger-animation" style="--stagger: 6;">
+            <div class="speaker-avatar">IR</div>
+            <h3 class="speaker-name">Incident Response</h3>
+            <div class="speaker-title">Instant Revocation System</div>
+            <p class="speaker-bio">Automated protocol to isolate suspicious nodes and re-validate identities within milliseconds of breach detection.</p>
+        </div>
     </div>
 
-    <section id="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <p style="text-align: center;">Write to me anything you want, I will answer.</p>
-            <form id="contact-form" action="https://formspree.io/f/mpwjyzpo" method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
+    
+</section>
+
+<section id="schedule" class="section">
+    <h2 class="animate-on-scroll">Protocol Operational Flow</h2>
+    
+    <div class="schedule-tabs">
+        <button class="tab-btn active" onclick="showSchedule('day1', event)">Handshake</button>
+        <button class="tab-btn" onclick="showSchedule('day2', event)">Transmission</button>
+        <button class="tab-btn" onclick="showSchedule('day3', event)">Defense Logic</button>
+    </div>
+
+    <div id="day1" class="schedule-content active">
+        <div class="timeline">
+            <div class="timeline-item animate-on-scroll" onclick="toggleTimelineItem(this)">
+                <div class="timeline-header">
+                    <div class="timeline-time">Step 01</div>
+                    <div class="timeline-info">
+                        <div class="timeline-title">Hardware Identity Check</div>
+                        <div class="timeline-speaker">TPM Module</div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
+                <div class="timeline-details">
+                    <div class="timeline-desc">The system verifies the node's hardware-bound unique ID to ensure the device hasn't been spoofed or replaced.</div>
                 </div>
-                <div class="form-group">
-                    <label for="Telegram username">Telegram username</label>
-                    <input type="Telegram username" id="Telegram username" name="Telegram username" required>
+            </div>
+            <div class="timeline-item animate-on-scroll" onclick="toggleTimelineItem(this)">
+                <div class="timeline-header">
+                    <div class="timeline-time">Step 02</div>
+                    <div class="timeline-info">
+                        <div class="timeline-title">Ephemeral Key Exchange</div>
+                        <div class="timeline-speaker">Diffie-Hellman (ECDH)</div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required></textarea>
+                <div class="timeline-details">
+                    <div class="timeline-desc">Nodes exchange public parameters to derive a temporary session key that exists only in memory for the duration of the talk.</div>
                 </div>
-                <button type="submit" class="btn">Send Message</button>
-            </form>
-            
-            <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const form = document.getElementById('contact-form');
-            
-                form.addEventListener('submit', async function(e) {
-                    e.preventDefault(); // جلوگیری از رفرش شدن صفحه
-            
-                    const formData = new FormData(form);
-                    const action = form.getAttribute('action');
-            
-                    try {
-                        const response = await fetch(action, {
-                            method: 'POST',
-                            body: formData
-                        });
-            
-                        if(response.ok) {
-                            alert('Thank you! Your message has been sent.');
-                            form.reset(); // پاک کردن فرم
-                        } else {
-                            alert('Oops! Something went wrong.');
-                        }
-                    } catch (error) {
-                        alert('Network error. Try again later.');
-                        console.error(error);
-                    }
-                });
-            });
-            </script>            
-            <div class="contact-info">
-                <p>
-                    <strong>Contact:</strong> 
-                    <span>
-                      <a href="mailto:Reza.You.in.You@gmail.com">Email</a> | 
-                      <a href="https://www.instagram.com/reza.you_in_you/" target="_blank">Instagram</a> |
-                      <a href="https://t.me/you_in_you" target="_blank">Telegram</a> |
-                      <a href="https://t.me/Edi_s_bot" target="_blank">Telegram Bot</a> |
-                      <a href="https://www.reddit.com/user/Impressive_Daikon232/" target="_blank">Reddit</a> |
-                      <a href="https://github.com/you-in-you" target="_blank">Github</a> |
-                    </span>
-                </p>
-            </div>            
+            </div>
+        </div>
+    </div>
+
+    <div id="day2" class="schedule-content">
+        <div class="timeline">
+            <div class="timeline-item animate-on-scroll" onclick="toggleTimelineItem(this)">
+                <div class="timeline-header">
+                    <div class="timeline-time">Step 03</div>
+                    <div class="timeline-info">
+                        <div class="timeline-title">AES-256 GCM Encryption</div>
+                        <div class="timeline-speaker">Encryption Engine</div>
+                    </div>
+                </div>
+                <div class="timeline-details">
+                    <div class="timeline-desc">Data is fragmented and encrypted using the AES-256-GCM standard, providing both confidentiality and authenticity.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="day3" class="schedule-content">
+        <div class="timeline">
+            <div class="timeline-item animate-on-scroll" onclick="toggleTimelineItem(this)">
+                <div class="timeline-header">
+                    <div class="timeline-time">Active</div>
+                    <div class="timeline-info">
+                        <div class="timeline-title">MitM Attack Detection</div>
+                        <div class="timeline-speaker">Security Monitor</div>
+                    </div>
+                </div>
+                <div class="timeline-details">
+                    <div class="timeline-desc">The protocol monitors for timing anomalies and certificate mismatches to detect and block Man-in-the-Middle attempts.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="standards" class="section">
+        <h2 class="animate-on-scroll">Security Standards & Compliance</h2>
+        <div class="sponsors-section animate-on-scroll">
+            <div class="sponsor-tiers">
+                <div class="sponsor-tier">
+                    <h3 class="tier-title platinum">Mission Critical Standards</h3>
+                    <div class="sponsors-grid platinum">
+                        <div class="sponsor-card platinum animate-on-scroll scale-up stagger-animation" style="--stagger: 1;">
+                            <div class="sponsor-logo">FIPS</div>
+                            <h4 class="sponsor-name">FIPS 140-2</h4>
+                            <p class="sponsor-description">Federal Information Processing Standards for cryptographic modules.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sponsor-tier">
+                    <h3 class="tier-title gold">Encryption Frameworks</h3>
+                    <div class="sponsors-grid gold">
+                        <div class="sponsor-card gold animate-on-scroll scale-up stagger-animation" style="--stagger: 2;">
+                            <div class="sponsor-logo">NIST</div>
+                            <h4 class="sponsor-name">NIST Post-Quantum</h4>
+                            <p class="sponsor-description">Following NIST guidelines for quantum-resistant algorithms.</p>
+                        </div>
+                        <div class="sponsor-card gold animate-on-scroll scale-up stagger-animation" style="--stagger: 3;">
+                            <div class="sponsor-logo">AES</div>
+                            <h4 class="sponsor-name">AES-256-GCM</h4>
+                            <p class="sponsor-description">Advanced Encryption Standard with Galois/Counter Mode.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sponsor-tier">
+                    <h3 class="tier-title silver">Network Protocols</h3>
+                    <div class="sponsors-grid silver">
+                        <div class="sponsor-card silver animate-on-scroll scale-up stagger-animation" style="--stagger: 4;">
+                            <div class="sponsor-logo">TLS</div>
+                            <h4 class="sponsor-name">TLS 1.3</h4>
+                            <p class="sponsor-description">Modern Transport Layer Security protocols.</p>
+                        </div>
+                        <div class="sponsor-card silver animate-on-scroll scale-up stagger-animation" style="--stagger: 5;">
+                            <div class="sponsor-logo">ISO</div>
+                            <h4 class="sponsor-name">ISO/IEC 27001</h4>
+                            <p class="sponsor-description">Information security management systems compliance.</p>
+                        </div>
+                        <div class="sponsor-card silver animate-on-scroll scale-up stagger-animation" style="--stagger: 6;">
+                            <div class="sponsor-logo">IEEE</div>
+                            <h4 class="sponsor-name">IEEE 802.1X</h4>
+                            <p class="sponsor-description">Port-based Network Access Control (PNAC).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer id="main-footer">
-        <p>&copy; 2025 Black-snow. All Rights Reserved. | Redesigned by you_in_you</p>
-         <p>"The best revenge is to improve yourself." — Ali ibn Abi Talib</p>
+<!-- 
+<div class="contact-info-column">
+    <h3 class="contact-info-title">Developer & Support</h3>
+    <div class="contact-info-grid">
+        <div class="contact-item">
+            <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </div>
+            <div class="contact-details">
+                <span class="contact-label">GitHub Source</span>
+                <span class="contact-value"><a href="https://github.com/you-in-you/Edis" target="_blank">github.com/Edis-Protocol</a></span>
+            </div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-1.897 8.942c-.143.64-.521.797-1.058.496l-2.89-2.13-1.394 1.341c-.154.154-.283.283-.58.283l.207-2.938 5.347-4.832c.232-.206-.051-.32-.36-.116l-6.608 4.159-2.848-.891c-.619-.194-.632-.619.129-.916l11.127-4.288c.515-.187.965.121.731 1.146z"/></svg>
+            </div>
+            <div class="contact-details">
+                <span class="contact-label">Telegram Channel</span>
+                <span class="contact-value"><a href="https://t.me/edis_project" target="_blank">@Edis_Project</a></span>
+            </div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <div class="contact-details">
+                <span class="contact-label">Academic Email</span>
+                <span class="contact-value"><a href="mailto:support@edis-protocol.com">support@edis-protocol.com</a></span>
+            </div>
+        </div>
+
+        <div class="contact-item">
+            <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+            </div>
+            <div class="contact-details">
+                <span class="contact-label">Build Status</span>
+                <span class="contact-value">v1.0.2-stable (Mainnet Ready)</span>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+    <footer>
+        <div class="footer-content">
+            <h2>Edis Protocol</h2>
+            <p>Secure Enterprise Communication Infrastructure • v1.0.2 Stable</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/your-username" class="social-link" title="GitHub Source" target="_blank">GH</a>
+                <a href="https://linkedin.com/in/your-profile" class="social-link" title="Professional Profile" target="_blank">IN</a>
+                <a href="https://t.me/your-channel" class="social-link" title="Technical Support" target="_blank">TG</a>
+                <a href="#about" class="social-link" title="Documentation">DOC</a>
+            </div>
+
+            <p>
+                © 2026 Edis Secure Communication Project. Licensed under MIT.
+                <br>
+                Designed for <strong>Network Security & Cryptography</strong> Research.
+            </p>
+            
+            <p style="font-size: 0.8rem; opacity: 0.5;">
+                Base Layout by <a href="https://templatemo.com" rel="nofollow noopener" target="_blank" style="color: inherit;">TemplateMo</a> | Refactored by You
+            </p>
+        </div>
     </footer>
 
-    <div id="chat-widget">💬</div>
-    <div id="chat-popup">
-        <div class="chat-header">
-            <h4>Rate This Design</h4>
-            <button type="button" id="chat-close">&times;</button>
-        </div>
-        <div class="chat-body">
-            <p>What you saw was my site!</p>
-            <p>If you have any suggestions for its design, write them below.</p>
-        </div>
-        <div class="chat-footer">
-            <form action="https://formspree.io/f/mpwjyzpo" method="POST">
-                <input type="text" name="message" placeholder="Type your message..." required>
-                <button type="submit" class="btn">Send</button>
-            </form>
-        </div>
-    </div>
-    
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            // --- Mobile Navigation Toggle ---
-            const menuToggle = document.getElementById('menu-toggle');
-            const navbar = document.getElementById('navbar');
-
-            if (menuToggle && navbar) {
-                 menuToggle.addEventListener('click', () => {
-                    navbar.classList.toggle('active');
-                 });
-                 // Close menu when a link is clicked (optional)
-                 navbar.querySelectorAll('a').forEach(link => {
-                     link.addEventListener('click', () => {
-                         if (navbar.classList.contains('active')) {
-                            navbar.classList.remove('active');
-                         }
-                     });
-                 });
-            }
-
-            // --- Active Nav Link Highlighting on Scroll ---
-            const sections = document.querySelectorAll('section'); // Select all sections
-            const navLinks = document.querySelectorAll('#navbar a.nav-link');
-
-            const options = {
-                root: null, // viewport
-                threshold: 0.5, // 50% of section visible
-                rootMargin: "-80px 0px 0px 0px" // Adjust for fixed header height
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            // Check if the link's href matches the intersecting section's id
-                            if (link.getAttribute('href') === `#${entry.target.id}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }, options);
-
-            // Observe all section elements found
-            sections.forEach(section => {
-                if(section.id) { // Only observe sections that have an ID (relevant for nav)
-                     observer.observe(section);
-                }
-            });
-
-
-            // --- Photo_Gallery Lightbox ---
-            const Photo_GalleryItems = document.querySelectorAll('.Photo_Gallery-item');
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxClose = document.getElementById('lightbox-close');
-
-            if (lightbox && lightboxImg && lightboxClose) {
-                Photo_GalleryItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        const imgSrc = item.getAttribute('data-src');
-                        if (imgSrc) {
-                            lightboxImg.setAttribute('src', imgSrc);
-                            lightbox.classList.add('active');
-                        }
-                    });
-                });
-
-                // Close lightbox
-                lightboxClose.addEventListener('click', () => {
-                    lightbox.classList.remove('active');
-                    lightboxImg.setAttribute('src', ''); // Clear src
-                });
-
-                // Close on clicking background (optional)
-                lightbox.addEventListener('click', (e) => {
-                    if (e.target === lightbox) { // Check if the click is on the background itself
-                         lightbox.classList.remove('active');
-                         lightboxImg.setAttribute('src', '');
-                    }
-                });
-            }
-
-
-            // --- Simulated Chat Widget Toggle ---
-            const chatWidget = document.getElementById('chat-widget');
-            const chatPopup = document.getElementById('chat-popup');
-            const chatClose = document.getElementById('chat-close');
-
-            if (chatWidget && chatPopup && chatClose) {
-                chatWidget.addEventListener('click', () => {
-                    chatPopup.classList.toggle('active');
-                });
-
-                chatClose.addEventListener('click', () => {
-                    chatPopup.classList.remove('active');
-                });
-            }
-
-             // --- Disable Form Submission (Demo Only) ---
-            const contactForm = document.getElementById('contact-form');
-            if(contactForm) {
-                contactForm.addEventListener('submit', (e) => {
-                    e.preventDefault(); // Prevent actual submission
-                    alert('Thank you for your message!');
-                    contactForm.reset(); // Clear the form
-                });
-            }
-
-        });
-    </script>
-
+<script src="templatemo-chain-scripts.js"></script>
 </body>
-
 </html>
-
